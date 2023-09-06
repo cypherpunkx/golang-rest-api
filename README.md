@@ -1,7 +1,7 @@
 # golang-rest-api
 
 ## Nama Proyek
-![Enigma Laundry]("./asset/Enigma-Laundry.png")
+![Enigma Laundry](./asset/Enigma-Laundry.png)
 
 ### Deskripsi
 Setelah menyelesaikan pembelajaran tentang Go API, Anda ditugaskan oleh manajemen Enigma Laundry (EL) untuk membuat sebuah aplikasi sederhana berbasis API untuk mencatat transaksi di tokonya.
