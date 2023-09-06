@@ -1,26 +1,21 @@
 package config
 
 import (
-	"fmt"
-
 	"github.com/spf13/viper"
 )
 
+// Config struktur konfigurasi aplikasi
 type Config struct {
-	Server   Server   `mapstructure:"server"`
-	Database Database `mapstructure:"database"`
-}
-
-type Server struct {
-	Port int `mapstructure:"SERVER_PORT"`
-}
-
-type Database struct {
-	Host     string `mapstructure:"DB_HOST"`
-	Port     int    `mapstructure:"DB_PORT"`
-	Username string `mapstructure:"DB_USERNAME"`
-	Password string `mapstructure:"DB_PASSWORD"`
-	DBName   string `mapstructure:"DB_NAME"`
+	Server struct {
+		Port int `mapstructure:"port"`
+	} `mapstructure:"server"`
+	Database struct {
+		Host     string `mapstructure:"host"`
+		Port     int    `mapstructure:"port"`
+		Username string `mapstructure:"username"`
+		Password string `mapstructure:"password"`
+		DBName   string `mapstructure:"dbname"`
+	} `mapstructure:"database"`
 }
 
 // LoadConfig membaca dan mengembalikan konfigurasi dari berkas .env
@@ -37,8 +32,6 @@ func LoadConfig(configFile string) Config {
 	if err := viper.Unmarshal(&config); err != nil {
 		panic("Failed to unmarshal config")
 	}
-
-	fmt.Println(config)
 
 	return config
 }
