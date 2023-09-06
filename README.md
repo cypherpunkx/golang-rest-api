@@ -1,6 +1,8 @@
 # golang-rest-api
 
 # Nama Proyek
+![Enigma Laundry]("./../asset/Enigma-Laundry.png")
+
 
 Deskripsi singkat proyek Anda.
 
