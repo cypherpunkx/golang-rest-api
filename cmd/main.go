@@ -14,4 +14,5 @@ func main() {
 	if err := application.Run(); err != nil {
 		fmt.Printf("Error: %v\n", err)
 	}
+
 }

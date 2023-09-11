@@ -1,6 +1,5 @@
 # golang-rest-api
 
-## Nama Proyek
 ![Enigma Laundry](./asset/Enigma-Laundry.png)
 
 ### Deskripsi
@@ -11,14 +10,14 @@ Langkah-langkah untuk menginstal proyek ini:
 
 1. Clone repositori ini: `git clone https://github.com/rafly-mahendra/challenge-goapi.git`
 2. Pindah ke direktori proyek: `cd nama-repo`
-3. Install dependensi: `npm install`
+3. Install dependensi: `go run download / go mod tidy`
 
 ## Penggunaan
 
 Cara menggunakan proyek ini:
 
-1. Jalankan perintah A: `perintah-a`
-2. Buka aplikasi dengan URL ini: `http://localhost:3000`
+1. Jalankan perintah A: `go run cmd/main.go`
+2. Buka aplikasi dengan URL ini: `http://localhost:8080`
 
 - - -
 

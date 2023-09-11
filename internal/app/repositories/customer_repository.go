@@ -8,6 +8,7 @@ import (
 
 type CustomerRepository interface {
 	Create(customer *domain.Customer) (*domain.Customer, error)
+	View(customer *[]domain.Customer) (*[]domain.Customer, error)
 }
 
 type customerRepository struct {
@@ -19,7 +20,15 @@ func NewCustomerRepository(db *gorm.DB) CustomerRepository {
 }
 
 func (r *customerRepository) Create(customer *domain.Customer) (*domain.Customer, error) {
-	if err := r.db.Create(&customer).Error; err != nil {
+	if err := r.db.Create(customer).Error; err != nil {
+		return nil, err
+	}
+
+	return customer, nil
+}
+
+func (r *customerRepository) View(customer *[]domain.Customer) (*[]domain.Customer, error) {
+	if err := r.db.Find(customer).Error; err != nil {
 		return nil, err
 	}
 

@@ -21,7 +21,7 @@ func NewCustomerHandler(customerService services.CustomerService) *CustomerHandl
 func (h *CustomerHandler) CreateCustomer(c *gin.Context) {
 	requestBody := domain.Customer{}
 
-	if err := c.ShouldBind(&requestBody); err != nil {
+	if err := c.ShouldBindJSON(&requestBody); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Bad Request",
 		})
@@ -31,25 +31,53 @@ func (h *CustomerHandler) CreateCustomer(c *gin.Context) {
 
 	validate := validator.New()
 	if err := validate.Struct(requestBody); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Bad Request",
-		})
-		fmt.Println(err.Error())
-		return
+		// Memeriksa jika ada kesalahan validasi
+		validationErrors := err.(validator.ValidationErrors)
+		for _, fieldError := range validationErrors {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": fmt.Sprintf("Field: %s, Error: %s", fieldError.Field(), fieldError.Tag()),
+			})
+			return
+		}
 	}
 
-	customer, err := h.customerService.Create(requestBody)
+	data, err := h.customerService.Create(&requestBody)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
+			"error": "Internal Server Error",
 		})
 		fmt.Println(err.Error())
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{
-		"data": customer,
-	})
+	response := domain.Response{
+		Message: "Customer Was Created!",
+		Data:    data,
+	}
+
+	c.JSON(http.StatusCreated, response)
+
+}
+
+func (h *CustomerHandler) GetAllCustomers(c *gin.Context) {
+	customers := []domain.Customer{}
+
+	data, err := h.customerService.View(&customers)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Internal Server Error",
+		})
+		fmt.Println(err.Error())
+		return
+	}
+
+	response := domain.Response{
+		Message: "Get All Data Customers",
+		Data:    data,
+	}
+
+	c.JSON(http.StatusOK, response)
 
 }

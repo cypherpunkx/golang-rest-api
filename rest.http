@@ -2,7 +2,14 @@ POST http://localhost:8080/api/v1/customers HTTP/1.1
 content-type: application/json
 
 {
-    "name": "sample",
-    "phoneNumber": "sample",
-    "address":"sample"
+    "name": "Jessi",
+    "phoneNumber": "08212654987"
+
 }
+
+###
+
+GET http://localhost:8080/api/v1/customers HTTP/1.1
+content-type: application/json
+
+

@@ -6,7 +6,8 @@ import (
 )
 
 type CustomerService interface {
-	Create(request domain.Customer) (*domain.Customer, error)
+	Create(request *domain.Customer) (*domain.Customer, error)
+	View(request *[]domain.Customer) (*[]domain.Customer, error)
 }
 
 type customerService struct {
@@ -17,29 +18,10 @@ func NewCustomerService(customerRepository repositories.CustomerRepository) Cust
 	return &customerService{customerRepository: customerRepository}
 }
 
-func (s *customerService) Create(requestBody domain.Customer) (*domain.Customer, error) {
+func (s *customerService) Create(requestBody *domain.Customer) (*domain.Customer, error) {
+	return s.customerRepository.Create(requestBody)
+}
 
-	// validate := validator.New()
-
-	// validate.VarWithValue(requestBody.Name, "", "contains")
-
-	// if requestBody.Name == "" {
-	// 	return nil, errors.New("nama harus diisi")
-	// }
-
-	// if requestBody.PhoneNumber == "" {
-	// 	return nil, errors.New("phone harus diisi")
-	// }
-
-	// if requestBody.Address == "" {
-	// 	return nil, errors.New("alamat harus diisi")
-	// }
-
-	customer, err := s.customerRepository.Create(&requestBody)
-
-	if err != nil {
-		panic(err)
-	}
-
-	return customer, nil
+func (s *customerService) View(requestBody *[]domain.Customer) (*[]domain.Customer, error) {
+	return s.customerRepository.View(requestBody)
 }

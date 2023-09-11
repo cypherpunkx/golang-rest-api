@@ -38,16 +38,25 @@ func initializeRouter(db *gorm.DB) *gin.Engine {
 	customerService := services.NewCustomerService(customerRepository)
 	customerHandler := handlers.NewCustomerHandler(customerService)
 
+	router.Use(LoggingMiddleware())
+
 	// Register routes
 	v1 := router.Group("/api/v1")
 	{
 		customerRoutes := v1.Group("/customers")
 		{
 			customerRoutes.POST("/", customerHandler.CreateCustomer)
+			customerRoutes.GET("/", customerHandler.GetAllCustomers)
 			// Tambahkan rute lain untuk pengguna di sini
 		}
 
 	}
 
 	return router
+}
+
+func LoggingMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		fmt.Println("ok")
+	}
 }
